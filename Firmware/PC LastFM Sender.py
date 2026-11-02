@@ -2,9 +2,9 @@ import requests
 import time
 
 # 1. Your Configurations
-LASTFM_API_KEY = "81c0098be9ccd301f3c4d0dcf4f96ebd"
-LASTFM_USERNAME = "Magician890"
-ESP32_IP = "http://10.0.0.77"  # <-- Replace with your real ESP32 IP address
+LASTFM_API_KEY = "API KEY"  # <-- Replace with Last FM API Key
+LASTFM_USERNAME = "LAST FM USERNAME"  # <-- Replace with Last FM username
+ESP32_IP = "ESP32 IP"  # <-- Replace with your real ESP32 IP address
 
 ESP32_URL = f"{ESP32_IP}/update"
 LASTFM_URL = "http://ws.audioscrobbler.com/2.0/"
@@ -36,7 +36,7 @@ while True:
                     print("🎵 Music is playing...")
 
                     if song_name != last_song:
-                        print(f"📦 Sending Track: {song_name} by {artist_name}")
+                        print(f"Sending Track: {song_name} by {artist_name}")
                         
                         payload = {
                             "song": song_name,
@@ -45,15 +45,15 @@ while True:
                         
                         esp_res = requests.post(ESP32_URL, json=payload, timeout=5)
                         if esp_res.status_code == 200:
-                            print("✅ Successfully pushed to ESP32!")
+                            print("Successfully pushed to ESP32")
                             last_song = song_name
                 else:
                     if last_song != "Paused":
-                        print("⏸️ Music Paused.")
+                        print("Music Paused.")
                         requests.post(ESP32_URL, json={"song": "Music Paused", "artist": ""}, timeout=5)
                         last_song = "Paused"
         else:
-            print(f"❌ Last.fm API Error: Code {res.status_code}")
+            print(f"Last.fm API Error: Code {res.status_code}")
 
     except Exception as e:
         print(f"Network error: {e}")
